@@ -1058,3 +1058,24 @@ class Parallel(Logger):
 
     def __repr__(self):
         return '%s(n_jobs=%s)' % (self.__class__.__name__, self.n_jobs)
+
+    def map(self, func, iterable):
+        """
+        Parallel map.
+
+        Parameters
+        ----------
+        func : callable
+            Function to map.
+        iterable : sequence
+            Collection of items to call `func` on.
+
+        Notes
+        -----
+        This is a convenience method that does the same as
+        ``parallel(delayed(func)(item) for item in iterable)``.  Can
+        be useful when using `joblib` together with APIs that expect a
+        map function.
+
+        """
+        return self(delayed(func)(item) for item in iterable)

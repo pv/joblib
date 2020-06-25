@@ -164,6 +164,11 @@ def test_simple_parallel(backend, n_jobs, verbose):
                 delayed(square)(x) for x in range(5)))
 
 
+def test_parallel_map():
+    assert ([square(x) for x in range(5)] ==
+            Parallel().map(square, range(5)))
+
+
 @parametrize('backend', ALL_VALID_BACKENDS)
 def test_main_thread_renamed_no_warning(backend, monkeypatch):
     # Check that no default backend relies on the name of the main thread:
